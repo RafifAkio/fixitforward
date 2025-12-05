@@ -6,7 +6,6 @@ import {
 import './App.css'; 
 
 // --- IMPORT BRAND ASSETS ---
-// FIXED: Changed to lowercase 'l' to prevent Vercel Build Error
 import logoSvg from './logo.svg'; 
 import titlePng from './Title.png';
 
@@ -91,17 +90,26 @@ const Header = ({ title, showBack, onBack, onNavigate }) => (
   </div>
 );
 
-// --- SCREEN: LOGIN ---
+// --- SCREEN: LOGIN (UPDATED) ---
 const LoginScreen = ({ onLogin, onNavigateToSignup }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLoginClick = () => {
+    // 1. Check for empty fields
     if (!email || !password) {
       alert("Please fill in both Email and Password to log in.");
       return;
     }
+
+    // 2. Email Validation (must have @ and end with .com)
+    const emailRegex = /\S+@\S+\.com/i; 
+    if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address containing '@' and ending in '.com'.");
+        return;
+    }
+
     onLogin();
   };
 
@@ -156,7 +164,7 @@ const LoginScreen = ({ onLogin, onNavigateToSignup }) => {
   );
 };
 
-// --- SCREEN: SIGNUP ---
+// --- SCREEN: SIGNUP (UPDATED) ---
 const SignupScreen = ({ onSignup, onBack }) => {
   const [formData, setFormData] = useState({
     username: '',
@@ -169,16 +177,31 @@ const SignupScreen = ({ onSignup, onBack }) => {
   const [showPass, setShowPass] = useState(false);
   const [showRePass, setShowRePass] = useState(false);
 
+  // Handle change with phone number restriction
   const handleChange = (field, value) => {
-    setFormData({ ...formData, [field]: value });
+    if (field === 'phone') {
+      const numericValue = value.replace(/[^0-9]/g, '');
+      setFormData({ ...formData, [field]: numericValue });
+    } else {
+      setFormData({ ...formData, [field]: value });
+    }
   };
 
   const handleSignupClick = () => {
+    // 1. Check for empty fields
     if (!formData.username || !formData.email || !formData.phone || !formData.password || !formData.rePassword) {
       alert("Please fill in all fields to create an account.");
       return;
     }
 
+    // 2. Email Validation (must have @ and end with .com)
+    const emailRegex = /\S+@\S+\.com/i; 
+    if (!emailRegex.test(formData.email)) {
+        alert("Please enter a valid email address containing '@' and ending in '.com'.");
+        return;
+    }
+
+    // 3. Check password match
     if (formData.password !== formData.rePassword) {
       alert("Passwords do not match!");
       return;
