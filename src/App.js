@@ -5,11 +5,10 @@ import {
 } from 'lucide-react';
 import './App.css'; 
 
-
 // --- IMPORT BRAND ASSETS ---
-import logoSvg from './Logo.svg';
+// FIXED: Changed to lowercase 'l' to prevent Vercel Build Error
+import logoSvg from './logo.svg'; 
 import titlePng from './Title.png';
-
 
 // --- HELPER: FORMAT RUPIAH ---
 const formatRupiah = (value) => {
@@ -92,11 +91,11 @@ const Header = ({ title, showBack, onBack, onNavigate }) => (
   </div>
 );
 
-// --- SCREEN: LOGIN (UPDATED) ---
+// --- SCREEN: LOGIN ---
 const LoginScreen = ({ onLogin, onNavigateToSignup }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // New State
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLoginClick = () => {
     if (!email || !password) {
@@ -125,7 +124,7 @@ const LoginScreen = ({ onLogin, onNavigateToSignup }) => {
         <div className="password-wrapper">
           <input 
             className="auth-input" 
-            type={showPassword ? "text" : "password"} // Toggles type
+            type={showPassword ? "text" : "password"} 
             placeholder="Password" 
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -156,7 +155,8 @@ const LoginScreen = ({ onLogin, onNavigateToSignup }) => {
     </div>
   );
 };
-// --- SCREEN: SIGNUP (UPDATED) ---
+
+// --- SCREEN: SIGNUP ---
 const SignupScreen = ({ onSignup, onBack }) => {
   const [formData, setFormData] = useState({
     username: '',
@@ -166,7 +166,6 @@ const SignupScreen = ({ onSignup, onBack }) => {
     rePassword: ''
   });
 
-  // Independent states for toggling visibility
   const [showPass, setShowPass] = useState(false);
   const [showRePass, setShowRePass] = useState(false);
 
@@ -574,7 +573,7 @@ const ChatScreen = ({ item, onBack, onNavigate }) => {
 
 // --- SCREEN: CHECKOUT ---
 const CheckoutScreen = ({ item, onBack, onNavigate, onUpdateStatus }) => {
-  const [paymentMethod, setPaymentMethod] = useState('COD'); // Default to COD
+  const [paymentMethod, setPaymentMethod] = useState('COD'); 
 
   const handleFixIt = () => {
     onUpdateStatus(item.id, 'In Progress');
@@ -602,7 +601,6 @@ const CheckoutScreen = ({ item, onBack, onNavigate, onUpdateStatus }) => {
         <div className="checkout-section">
           <label className="section-label" style={{ marginBottom: '12px' }}>Payment Method</label>
           
-          {/* SPay Selection */}
           <div 
             className={`payment-row ${paymentMethod === 'SPay' ? 'active' : 'inactive'}`} 
             onClick={() => setPaymentMethod('SPay')}
@@ -612,7 +610,6 @@ const CheckoutScreen = ({ item, onBack, onNavigate, onUpdateStatus }) => {
              <input type="radio" name="payment" style={{ marginLeft: 'auto', accentColor: '#eab308' }} checked={paymentMethod === 'SPay'} readOnly />
           </div>
           
-          {/* COD Selection */}
           <div 
             className={`payment-row ${paymentMethod === 'COD' ? 'active' : 'inactive'}`}
             onClick={() => setPaymentMethod('COD')}
@@ -741,6 +738,3 @@ export default function App() {
     </div>
   );
 }
-
-
-
