@@ -1,38 +1,383 @@
-.App {
-  text-align: center;
+:root {
+  --primary-yellow: #facc15;
+  --primary-yellow-dark: #eab308;
+  --dark-gray: #111827;
+  --medium-gray: #9ca3af;
+  --light-gray: #f3f4f6;
+  --white: #ffffff;
+  --border-color: #e5e7eb;
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --radius-lg: 12px;
+  --chat-bg: #f9fafb;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #e5e5e5;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+/* --- Layout Container --- */
+.app-container {
+  max-width: 450px;
+  margin: 0 auto;
+  background-color: var(--chat-bg);
   min-height: 100vh;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--chat-bg);
+}
+
+.screen.white-bg {
+  background-color: var(--white);
+}
+
+.scrollable-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+/* --- Header --- */
+.header {
+  background-color: var(--white);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+.header-title {
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--dark-gray);
+  margin: 0;
+}
+
+.highlight { color: var(--primary-yellow-dark); }
+.icon-btn { background: none; border: none; cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; }
+.header-actions { display: flex; gap: 12px; align-items: center; }
+
+/* --- Components --- */
+.logo-box { width: 32px; height: 32px; background-color: var(--primary-yellow); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 8px; color: white; }
+.profile-pic { width: 32px; height: 32px; background-color: #e5e7eb; border-radius: 50%; border: 2px solid var(--primary-yellow); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+
+/* --- Item Cards (Home) --- */
+.grid-list { display: flex; flex-direction: column; gap: 16px; padding: 16px; }
+.item-card { background-color: var(--white); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border-color); cursor: pointer; transition: transform 0.2s; position: relative; }
+.item-card:hover { transform: translateY(-2px); }
+.card-image { height: 160px; display: flex; align-items: center; justify-content: center; position: relative; }
+.card-image h3 { color: rgba(255, 255, 255, 0.5); font-size: 1.5rem; font-weight: bold; margin: 0; }
+.accent-bar { position: absolute; bottom: 0; width: 100%; height: 4px; background-color: var(--primary-yellow); }
+.card-details { padding: 16px; }
+.card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.price-tag { color: #d97706; font-weight: bold; }
+.location-row { display: flex; align-items: center; color: var(--medium-gray); font-size: 0.875rem; margin-bottom: 16px; }
+.btn-primary { width: 100%; background-color: var(--dark-gray); color: var(--white); padding: 10px; border-radius: 8px; font-weight: 500; border: none; cursor: pointer; }
+
+/* Category Badge */
+.category-badge { display: inline-block; background-color: var(--light-gray); color: var(--dark-gray); font-size: 0.7rem; font-weight: 700; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; margin-bottom: 8px; }
+
+/* --- Status Badge --- */
+.status-badge { position: absolute; top: 12px; right: 12px; padding: 6px 12px; border-radius: 99px; font-size: 0.75rem; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); z-index: 10; }
+.status-available { background-color: #22c55e; }
+.status-in-progress { background-color: #ef4444; }
+.status-fixed { background-color: #3b82f6; }
+
+/* --- Button for Mark as Fixed --- */
+.btn-complete {
+  width: 100%;
+  background-color: #22c55e; /* Green */
+  color: white;
+  padding: 12px;
+  border-radius: var(--radius-lg);
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-complete:hover {
+  background-color: #16a34a;
+}
+
+/* --- Details Screen --- */
+.detail-hero { height: 250px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.content-padding { padding: 0 20px; }
+.section-label { font-size: 0.75rem; font-weight: 700; color: var(--medium-gray); text-transform: uppercase; margin-bottom: 8px; display: block; letter-spacing: 0.05em; }
+.description-box { background-color: var(--light-gray); padding: 16px; border-radius: 8px; border: 1px solid var(--border-color); color: #374151; line-height: 1.5; margin: 0; }
+.footer-actions { padding: 20px; background-color: var(--white); border-top: 1px solid var(--border-color); display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: auto; }
+.btn-outline { background-color: var(--white); border: 2px solid var(--dark-gray); color: var(--dark-gray); padding: 12px; border-radius: var(--radius-lg); font-weight: bold; cursor: pointer; }
+.btn-solid { background-color: var(--dark-gray); color: var(--white); padding: 12px; border-radius: var(--radius-lg); font-weight: bold; border: none; cursor: pointer; }
+
+/* --- Chat Screen --- */
+.chat-area { padding: 16px; display: flex; flex-direction: column; background-color: #f3f4f6; }
+.message-row { display: flex; width: 100%; margin-bottom: 12px; }
+.message-row.me { justify-content: flex-end; }
+.message-bubble { max-width: 75%; padding: 12px 16px; border-radius: 16px; font-size: 0.9rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); position: relative; }
+.message-bubble.me { background-color: var(--primary-yellow); color: black; border-bottom-right-radius: 0; }
+.message-bubble.other { background-color: var(--white); color: var(--dark-gray); border: 1px solid var(--border-color); border-bottom-left-radius: 0; }
+
+.deal-wrapper { background-color: var(--white); padding: 16px; border-top: 1px solid var(--border-color); }
+.deal-box { background-color: #0f172a; color: white; padding: 16px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+.deal-info h4 { margin: 0; font-size: 0.75rem; color: #94a3b8; font-weight: 500; }
+.deal-price { font-size: 1.25rem; font-weight: 800; color: var(--primary-yellow); margin: 2px 0 0 0; }
+.deal-actions { display: flex; gap: 10px; }
+.btn-deny { background-color: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+.btn-confirm { background-color: #22c55e; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+
+.chat-input-bar { display: flex; gap: 8px; align-items: center; }
+.plus-btn { background-color: var(--light-gray); border: none; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--dark-gray); transition: all 0.2s; }
+.plus-btn:hover { background-color: #e5e7eb; }
+.plus-btn.active { transform: rotate(45deg); background-color: var(--primary-yellow); color: black; }
+.chat-input-container { flex: 1; position: relative; display: flex; align-items: center; }
+.chat-input { width: 100%; background-color: var(--white); border: 2px solid var(--primary-yellow); border-radius: 99px; padding: 12px 16px; padding-right: 48px; outline: none; font-size: 0.95rem; box-sizing: border-box; }
+.send-btn-float { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); background-color: var(--primary-yellow); border: none; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: white; }
+.offer-creator { position: absolute; bottom: 80px; left: 16px; background: white; padding: 12px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border: 1px solid var(--border-color); display: flex; gap: 8px; animation: slideUp 0.2s ease-out; z-index: 10; }
+@keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.offer-input { border: 1px solid #d1d5db; padding: 8px; border-radius: 6px; width: 120px; font-weight: bold; color: var(--dark-gray); }
+.btn-propose { background-color: var(--dark-gray); color: white; border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; cursor: pointer; }
+
+/* --- Upload Screen --- */
+.upload-form { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+.image-upload-box { width: 100%; height: 200px; background-color: var(--light-gray); border: 2px dashed #d1d5db; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; transition: all 0.2s; }
+.image-upload-box:hover { background-color: #e5e7eb; border-color: var(--medium-gray); }
+.uploaded-image-preview { width: 100%; height: 100%; object-fit: cover; }
+.upload-placeholder { text-align: center; color: var(--medium-gray); }
+
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-label { font-size: 0.85rem; font-weight: 700; color: var(--dark-gray); }
+.form-input { padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; outline: none; background-color: var(--white); }
+.form-input:focus { border-color: var(--primary-yellow); box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.2); }
+.form-textarea { padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; outline: none; min-height: 100px; resize: vertical; font-family: inherit; }
+
+.form-select {
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  background-color: var(--white);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+/* --- Checkout & Success --- */
+.checkout-section { background-color: var(--white); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 12px; }
+.delivery-options { display: flex; gap: 8px; margin-top: 8px; }
+.option-btn { flex: 1; padding: 8px; border-radius: 8px; font-size: 0.875rem; cursor: pointer; }
+.option-btn.active { background-color: #fefce8; border: 2px solid var(--primary-yellow); font-weight: bold; }
+.option-btn.inactive { background-color: white; border: 1px solid var(--border-color); color: var(--medium-gray); }
+.payment-row { display: flex; align-items: center; padding: 12px; border-radius: 8px; margin-bottom: 8px; }
+.payment-row.active { background-color: #fefce8; border: 2px solid var(--primary-yellow); }
+.payment-row.inactive { border: 1px solid var(--border-color); }
+.success-screen { justify-content: center; align-items: center; text-align: center; padding: 32px; background: white; }
+.circle-check { width: 96px; height: 96px; background-color: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+.summary-card { background-color: var(--light-gray); width: 100%; padding: 24px; border-radius: 16px; margin-bottom: 32px; margin-top: 20px; box-sizing: border-box; }
+.btn-yellow-block { width: 100%; background-color: var(--primary-yellow); color: black; font-weight: bold; padding: 16px; border-radius: 12px; border: none; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
+.btn-yellow-block:hover { background-color: var(--primary-yellow-dark); }
+
+/* Utilities */
+.text-bold { font-weight: bold; }
+.text-2xl { font-size: 1.5rem; }
+.text-xl { font-size: 1.25rem; }
+.mb-1 { margin-bottom: 4px; }
+.flex-1 { flex: 1; }
+
+/* --- New Button for Mark as Fixed --- */
+.btn-complete {
+  width: 100%;
+  background-color: #22c55e; /* Green */
+  color: white;
+  padding: 12px;
+  border-radius: var(--radius-lg);
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-complete:hover {
+  background-color: #16a34a;
+}
+
+/* --- Header Branding --- */
+.brand-logo {
+  width: 36px;       /* Adjust to match your preferred icon size */
+  height: 36px;
+  margin-right: 10px;
+  object-fit: contain;
+}
+
+.brand-title {
+  height: 24px;      /* Height of the text image */
+  width: auto;       /* Let width adjust automatically */
+  display: block;    /* Removes weird spacing under images */
+}
+
+/* Update header-title to allow flex centering if needed */
+.header-title-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* --- Auth Screens (Login / Signup) - ADAPTED STYLE --- */
+.auth-container {
+  padding: 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  min-height: 100vh;
+  background-color: var(--white); /* Changed to White */
 }
 
-.App-link {
-  color: #61dafb;
+.auth-logo {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 32px;
+  object-fit: contain;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.auth-form {
+  width: 100%;
+  max-width: 350px; /* Limits width on large screens for better look */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Matches your existing .form-input style */
+.auth-input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg); /* Uses your 12px radius */
+  font-size: 1rem;
+  background-color: #f9fafb; /* Very light gray for contrast on white */
+  box-sizing: border-box;
+  color: var(--dark-gray);
+  outline: none;
+}
+
+.auth-input:focus {
+  border-color: var(--primary-yellow);
+  box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.2);
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--radius-lg); /* Uses your 12px radius */
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  text-align: center;
+  margin-bottom: 8px;
+  transition: transform 0.1s;
+}
+
+.auth-btn:active {
+  transform: scale(0.98);
+}
+
+/* Primary Yellow Button */
+.btn-yellow {
+  background-color: var(--primary-yellow);
+  color: var(--dark-gray);
+}
+
+.btn-yellow:hover {
+  background-color: var(--primary-yellow-dark);
+}
+
+/* Google Button - Styled as a secondary option */
+.google-btn {
+  background-color: var(--white);
+  border: 2px solid var(--border-color);
+  color: var(--dark-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.divider {
+  margin: 0 0 16px 0;
+  text-align: center;
+  color: var(--medium-gray);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.link-text {
+  color: var(--dark-gray);
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Colorful G icon */
+.g-icon {
+  font-weight: 900;
+  font-size: 1.2rem;
+  background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* --- Password Toggle --- */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper .auth-input {
+  padding-right: 40px; /* Make space for the icon so text doesn't overlap */
+}
+
+.password-toggle-icon {
+  position: absolute;
+  right: 12px;
+  cursor: pointer;
+  color: var(--medium-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-toggle-icon:hover {
+  color: var(--dark-gray);
 }

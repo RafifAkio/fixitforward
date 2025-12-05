@@ -1,0 +1,1 @@
+Open in terminal, then type "npm start" to start react
